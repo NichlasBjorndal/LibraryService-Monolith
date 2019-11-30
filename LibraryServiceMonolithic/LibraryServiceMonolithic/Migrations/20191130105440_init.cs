@@ -113,12 +113,12 @@ namespace LibraryServiceMonolithic.Migrations
             migrationBuilder.InsertData(
                 table: "Book",
                 columns: new[] { "Id", "AuthorId", "ISBN", "Title" },
-                values: new object[] { 2, 2, "1234", "Book A" });
+                values: new object[] { 2, 2, "1234", "Book B" });
 
             migrationBuilder.InsertData(
                 table: "Book",
                 columns: new[] { "Id", "AuthorId", "ISBN", "Title" },
-                values: new object[] { 3, 3, "1234", "Book A" });
+                values: new object[] { 3, 3, "1234", "Book Z" });
 
             migrationBuilder.InsertData(
                 table: "Loan",

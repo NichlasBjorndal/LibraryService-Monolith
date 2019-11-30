@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryServiceMonolithic.Migrations
 {
     [DbContext(typeof(LibraryServiceMonolithicContext))]
-    [Migration("20191130101516_init")]
+    [Migration("20191130105440_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,14 +94,14 @@ namespace LibraryServiceMonolithic.Migrations
                             Id = 2,
                             AuthorId = 2,
                             ISBN = "1234",
-                            Title = "Book A"
+                            Title = "Book B"
                         },
                         new
                         {
                             Id = 3,
                             AuthorId = 3,
                             ISBN = "1234",
-                            Title = "Book A"
+                            Title = "Book Z"
                         });
                 });
 

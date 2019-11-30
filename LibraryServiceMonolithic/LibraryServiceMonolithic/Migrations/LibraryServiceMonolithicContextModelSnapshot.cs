@@ -92,14 +92,14 @@ namespace LibraryServiceMonolithic.Migrations
                             Id = 2,
                             AuthorId = 2,
                             ISBN = "1234",
-                            Title = "Book A"
+                            Title = "Book B"
                         },
                         new
                         {
                             Id = 3,
                             AuthorId = 3,
                             ISBN = "1234",
-                            Title = "Book A"
+                            Title = "Book Z"
                         });
                 });
 

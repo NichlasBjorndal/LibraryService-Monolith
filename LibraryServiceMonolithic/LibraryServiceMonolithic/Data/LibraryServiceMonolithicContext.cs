@@ -40,7 +40,6 @@ namespace LibraryServiceMonolithic.Models
                 Id = 1,
                 ISBN = "1234",
                 Title = "Book A",
-                //Author = author1,
                 AuthorId = 1
             };
 
@@ -55,7 +54,6 @@ namespace LibraryServiceMonolithic.Models
                 Id = 2,
                 ISBN = "1234",
                 Title = "Book B",
-                //Author = author2,
                 AuthorId = 2
             };
 
@@ -71,7 +69,6 @@ namespace LibraryServiceMonolithic.Models
                 Id = 3,
                 ISBN = "1234",
                 Title = "Book Z",
-                //Author = author3,
                 AuthorId = 3
             };
 
@@ -112,9 +109,7 @@ namespace LibraryServiceMonolithic.Models
             var loan1 = new
             {
                 Id = 1,
-                //User = user1,
                 UserId = 1,
-                //Book = book1,
                 BookId = 1,
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
@@ -124,9 +119,7 @@ namespace LibraryServiceMonolithic.Models
             var loan2 = new 
             {
                 Id = 2,
-                //User = user1,
                 UserId = 1,
-                //Book = book2,
                 BookId = 2,
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
@@ -137,9 +130,7 @@ namespace LibraryServiceMonolithic.Models
             var loan3 = new 
             {
                 Id = 3,
-                //User = user2,
                 UserId = 2,
-                //Book = book3,
                 BookId = 3,
                 StartDate = new DateTime(),
                 EndDate = new DateTime(),
