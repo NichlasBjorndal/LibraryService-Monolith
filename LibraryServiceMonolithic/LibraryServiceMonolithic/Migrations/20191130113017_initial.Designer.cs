@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryServiceMonolithic.Migrations
 {
     [DbContext(typeof(LibraryServiceMonolithicContext))]
-    [Migration("20191130105440_init")]
-    partial class init
+    [Migration("20191130113017_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,8 +42,8 @@ namespace LibraryServiceMonolithic.Migrations
                         new
                         {
                             Id = 1,
-                            FirstName = "Thomas",
-                            LastName = "Edison"
+                            FirstName = "Edger Allan",
+                            LastName = "Poe"
                         },
                         new
                         {
@@ -54,8 +54,8 @@ namespace LibraryServiceMonolithic.Migrations
                         new
                         {
                             Id = 3,
-                            FirstName = "Thomas",
-                            LastName = "Edison"
+                            FirstName = "H.C",
+                            LastName = "Andersen"
                         });
                 });
 
@@ -181,6 +181,9 @@ namespace LibraryServiceMonolithic.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("User");
@@ -191,14 +194,16 @@ namespace LibraryServiceMonolithic.Migrations
                             Id = 1,
                             Email = "abc@gmail.com",
                             FirstName = "Nick",
-                            LastName = "Hansen"
+                            LastName = "Hansen",
+                            Password = "thisIsAPW"
                         },
                         new
                         {
                             Id = 2,
                             Email = "abc@gmail.com",
                             FirstName = "Nick",
-                            LastName = "Hansen"
+                            LastName = "Hansen",
+                            Password = "c0mpl!c@t3dPw"
                         });
                 });
 

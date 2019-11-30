@@ -28,14 +28,14 @@ namespace LibraryServiceMonolithic.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-            var author1 = new
+            var author1 = new Author
             {
                 Id = 1,
-                FirstName = "Thomas",
-                LastName = "Edison"
+                FirstName = "Edger Allan",
+                LastName = "Poe"
             };
 
-            var book1 = new 
+            var book1 = new Book
             {
                 Id = 1,
                 ISBN = "1234",
@@ -43,13 +43,13 @@ namespace LibraryServiceMonolithic.Models
                 AuthorId = 1
             };
 
-            var author2 = new 
+            var author2 = new Author
             {
                 Id = 2,
                 FirstName = "Thomas",
                 LastName = "Edison"
             };
-            var book2 = new 
+            var book2 = new Book
             {
                 Id = 2,
                 ISBN = "1234",
@@ -57,14 +57,14 @@ namespace LibraryServiceMonolithic.Models
                 AuthorId = 2
             };
 
-            var author3 = new 
+            var author3 = new Author
             {
                 Id = 3,
-                FirstName = "Thomas",
-                LastName = "Edison"
+                FirstName = "H.C",
+                LastName = "Andersen"
             };
 
-            var book3 = new 
+            var book3 = new Book
             {
                 Id = 3,
                 ISBN = "1234",
@@ -86,19 +86,21 @@ namespace LibraryServiceMonolithic.Models
               
 
 
-            var user1 = new 
+            var user1 = new User
             {
                 Id = 1,
                 FirstName = "Nick",
                 LastName = "Hansen",
-                Email = "abc@gmail.com"
+                Email = "abc@gmail.com",
+                Password = "thisIsAPW"
             };
-            var user2 = new 
+            var user2 = new User
             {
                 Id = 2,
-                FirstName = "Nick",
-                LastName = "Hansen",
-                Email = "abc@gmail.com"
+                FirstName = "Marcus",
+                LastName = "B",
+                Email = "abc@gmail.com",
+                Password = "c0mpl!c@t3dPw"
             };
 
 
@@ -106,7 +108,7 @@ namespace LibraryServiceMonolithic.Models
                 user1, user2
         );
 
-            var loan1 = new
+            var loan1 = new Loan
             {
                 Id = 1,
                 UserId = 1,
@@ -116,7 +118,7 @@ namespace LibraryServiceMonolithic.Models
                 Active = true
             };
 
-            var loan2 = new 
+            var loan2 = new Loan
             {
                 Id = 2,
                 UserId = 1,
@@ -127,7 +129,7 @@ namespace LibraryServiceMonolithic.Models
             };
 
 
-            var loan3 = new 
+            var loan3 = new Loan
             {
                 Id = 3,
                 UserId = 2,
@@ -142,6 +144,8 @@ namespace LibraryServiceMonolithic.Models
             );
 
         }
+
+        public DbSet<LibraryServiceMonolithic.Models.Author> Author { get; set; }
     }
 
 }

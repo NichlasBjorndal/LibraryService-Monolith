@@ -24,14 +24,22 @@ namespace LibraryServiceMonolithic.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Loan>>> GetLoan()
         {
-            return await _context.Loan.ToListAsync();
+            return await _context.Loan
+                .Include(l => l.Book)
+                    .ThenInclude(book => book.Author)
+                .Include(l => l.User)
+                .ToListAsync();
         }
 
         // GET: api/Loans/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Loan>> GetLoan(int id)
         {
-            var loan = await _context.Loan.FindAsync(id);
+            var loan = await _context.Loan
+                .Include(l => l.Book)
+                    .ThenInclude(book => book.Author)
+                .Include(l => l.User)
+                .FirstAsync(l => l.Id == id);
 
             if (loan == null)
             {

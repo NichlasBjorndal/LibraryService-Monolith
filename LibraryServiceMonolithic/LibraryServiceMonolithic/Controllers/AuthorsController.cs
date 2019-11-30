@@ -11,52 +11,48 @@ namespace LibraryServiceMonolithic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class AuthorsController : ControllerBase
     {
         private readonly LibraryServiceMonolithicContext _context;
 
-        public BooksController(LibraryServiceMonolithicContext context)
+        public AuthorsController(LibraryServiceMonolithicContext context)
         {
             _context = context;
         }
 
-        // GET: api/Books
+        // GET: api/Authors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBook()
+        public async Task<ActionResult<IEnumerable<Author>>> GetAuthor()
         {
-            return await _context.Book
-                .Include(book => book.Author)
-                .ToListAsync();
+            return await _context.Author.ToListAsync();
         }
 
-        // GET: api/Books/5
+        // GET: api/Authors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBook(int id)
+        public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            var book = await _context.Book
-                .Include(b => b.Author)
-                .FirstAsync(b => b.Id == id);
+            var author = await _context.Author.FindAsync(id);
 
-            if (book == null)
+            if (author == null)
             {
                 return NotFound();
             }
 
-            return book;
+            return author;
         }
 
-        // PUT: api/Books/5
+        // PUT: api/Authors/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(int id, Book book)
+        public async Task<IActionResult> PutAuthor(int id, Author author)
         {
-            if (id != book.Id)
+            if (id != author.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(book).State = EntityState.Modified;
+            _context.Entry(author).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +60,7 @@ namespace LibraryServiceMonolithic.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookExists(id))
+                if (!AuthorExists(id))
                 {
                     return NotFound();
                 }
@@ -77,37 +73,37 @@ namespace LibraryServiceMonolithic.Controllers
             return NoContent();
         }
 
-        // POST: api/Books
+        // POST: api/Authors
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-            _context.Book.Add(book);
+            _context.Author.Add(author);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBook", new { id = book.Id }, book);
+            return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
         }
 
-        // DELETE: api/Books/5
+        // DELETE: api/Authors/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Book>> DeleteBook(int id)
+        public async Task<ActionResult<Author>> DeleteAuthor(int id)
         {
-            var book = await _context.Book.FindAsync(id);
-            if (book == null)
+            var author = await _context.Author.FindAsync(id);
+            if (author == null)
             {
                 return NotFound();
             }
 
-            _context.Book.Remove(book);
+            _context.Author.Remove(author);
             await _context.SaveChangesAsync();
 
-            return book;
+            return author;
         }
 
-        private bool BookExists(int id)
+        private bool AuthorExists(int id)
         {
-            return _context.Book.Any(e => e.Id == id);
+            return _context.Author.Any(e => e.Id == id);
         }
     }
 }

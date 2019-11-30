@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LibraryServiceMonolithic.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,8 @@ namespace LibraryServiceMonolithic.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,18 +92,18 @@ namespace LibraryServiceMonolithic.Migrations
                 columns: new[] { "Id", "FirstName", "LastName" },
                 values: new object[,]
                 {
-                    { 1, "Thomas", "Edison" },
+                    { 1, "Edger Allan", "Poe" },
                     { 2, "Thomas", "Edison" },
-                    { 3, "Thomas", "Edison" }
+                    { 3, "H.C", "Andersen" }
                 });
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "Email", "FirstName", "LastName" },
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password" },
                 values: new object[,]
                 {
-                    { 1, "abc@gmail.com", "Nick", "Hansen" },
-                    { 2, "abc@gmail.com", "Nick", "Hansen" }
+                    { 1, "abc@gmail.com", "Nick", "Hansen", "thisIsAPW" },
+                    { 2, "abc@gmail.com", "Nick", "Hansen", "c0mpl!c@t3dPw" }
                 });
 
             migrationBuilder.InsertData(

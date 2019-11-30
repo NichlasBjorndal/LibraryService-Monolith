@@ -12,5 +12,10 @@ namespace LibraryServiceMonolithic.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+
+        /// <summary>
+        /// Plain text password for simplicity, do not do this in production
+        /// </summary>
+        public string Password { get; set; }
     }
 }
