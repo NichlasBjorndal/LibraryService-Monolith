@@ -35,6 +35,26 @@ namespace LibraryServiceMonolithic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Author");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FirstName = "Thomas",
+                            LastName = "Edison"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FirstName = "Thomas",
+                            LastName = "Edison"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FirstName = "Thomas",
+                            LastName = "Edison"
+                        });
                 });
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.Book", b =>
@@ -58,6 +78,29 @@ namespace LibraryServiceMonolithic.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Book");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorId = 1,
+                            ISBN = "1234",
+                            Title = "Book A"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorId = 2,
+                            ISBN = "1234",
+                            Title = "Book A"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AuthorId = 3,
+                            ISBN = "1234",
+                            Title = "Book A"
+                        });
                 });
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.Loan", b =>
@@ -70,7 +113,7 @@ namespace LibraryServiceMonolithic.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("BookId")
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
@@ -79,7 +122,7 @@ namespace LibraryServiceMonolithic.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -89,6 +132,35 @@ namespace LibraryServiceMonolithic.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Loan");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            BookId = 1,
+                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = false,
+                            BookId = 2,
+                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            BookId = 3,
+                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.User", b =>
@@ -110,6 +182,22 @@ namespace LibraryServiceMonolithic.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "abc@gmail.com",
+                            FirstName = "Nick",
+                            LastName = "Hansen"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "abc@gmail.com",
+                            FirstName = "Nick",
+                            LastName = "Hansen"
+                        });
                 });
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.Book", b =>
@@ -123,11 +211,15 @@ namespace LibraryServiceMonolithic.Migrations
                 {
                     b.HasOne("LibraryServiceMonolithic.Models.Book", "Book")
                         .WithMany()
-                        .HasForeignKey("BookId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LibraryServiceMonolithic.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

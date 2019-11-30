@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LibraryServiceMonolithic.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,8 +63,8 @@ namespace LibraryServiceMonolithic.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: true),
-                    BookId = table.Column<int>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    BookId = table.Column<int>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
                     Active = table.Column<bool>(nullable: false)
@@ -77,14 +77,63 @@ namespace LibraryServiceMonolithic.Migrations
                         column: x => x.BookId,
                         principalTable: "Book",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Loan_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Author",
+                columns: new[] { "Id", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { 1, "Thomas", "Edison" },
+                    { 2, "Thomas", "Edison" },
+                    { 3, "Thomas", "Edison" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "Id", "Email", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { 1, "abc@gmail.com", "Nick", "Hansen" },
+                    { 2, "abc@gmail.com", "Nick", "Hansen" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Book",
+                columns: new[] { "Id", "AuthorId", "ISBN", "Title" },
+                values: new object[] { 1, 1, "1234", "Book A" });
+
+            migrationBuilder.InsertData(
+                table: "Book",
+                columns: new[] { "Id", "AuthorId", "ISBN", "Title" },
+                values: new object[] { 2, 2, "1234", "Book A" });
+
+            migrationBuilder.InsertData(
+                table: "Book",
+                columns: new[] { "Id", "AuthorId", "ISBN", "Title" },
+                values: new object[] { 3, 3, "1234", "Book A" });
+
+            migrationBuilder.InsertData(
+                table: "Loan",
+                columns: new[] { "Id", "Active", "BookId", "EndDate", "StartDate", "UserId" },
+                values: new object[] { 1, true, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 });
+
+            migrationBuilder.InsertData(
+                table: "Loan",
+                columns: new[] { "Id", "Active", "BookId", "EndDate", "StartDate", "UserId" },
+                values: new object[] { 2, false, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 });
+
+            migrationBuilder.InsertData(
+                table: "Loan",
+                columns: new[] { "Id", "Active", "BookId", "EndDate", "StartDate", "UserId" },
+                values: new object[] { 3, true, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Book_AuthorId",
