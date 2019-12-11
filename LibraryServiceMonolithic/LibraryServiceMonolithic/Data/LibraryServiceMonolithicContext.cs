@@ -145,6 +145,8 @@ namespace LibraryServiceMonolithic.Models
         }
 
         public DbSet<LibraryServiceMonolithic.Models.Author> Author { get; set; }
+
+        public DbSet<LibraryServiceMonolithic.Models.Order> Order { get; set; }
     }
 
 }
