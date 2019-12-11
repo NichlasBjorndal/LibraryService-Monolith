@@ -142,7 +142,6 @@ namespace LibraryServiceMonolithic.Models
             modelBuilder.Entity<Loan>().HasData(
              loan1, loan2, loan3
             );
-
         }
 
         public DbSet<LibraryServiceMonolithic.Models.Author> Author { get; set; }
