@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace LibraryServiceMonolithic.Models
 {
-    public class Order
+    public class PhysicalBook
     {
         public int Id { get; set; }
-        public DateTime OrderTime { get; set; }
-        public bool IsCompleted { get; set; }
-        public int BookId { get; set; } 
+        public Order Order { get; set; }
         public Book Book { get; set; }
     }
 }

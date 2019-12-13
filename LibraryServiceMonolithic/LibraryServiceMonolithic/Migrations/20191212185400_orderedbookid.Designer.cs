@@ -4,14 +4,16 @@ using LibraryServiceMonolithic.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibraryServiceMonolithic.Migrations
 {
     [DbContext(typeof(LibraryServiceMonolithicContext))]
-    partial class LibraryServiceMonolithicContextModelSnapshot : ModelSnapshot
+    [Migration("20191212185400_orderedbookid")]
+    partial class orderedbookid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,42 +172,43 @@ namespace LibraryServiceMonolithic.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("OrderTime")
+                    b.Property<DateTime>("OrdTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderedBookId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("OrderedBookId");
 
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("LibraryServiceMonolithic.Models.PhysicalBook", b =>
+            modelBuilder.Entity("LibraryServiceMonolithic.Models.OrderedBook", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BookId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<string>("ISBN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("AuthorId");
 
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("PhysicalBook");
+                    b.ToTable("OrderedBook");
                 });
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.User", b =>
@@ -276,22 +279,20 @@ namespace LibraryServiceMonolithic.Migrations
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.Order", b =>
                 {
-                    b.HasOne("LibraryServiceMonolithic.Models.Book", "Book")
+                    b.HasOne("LibraryServiceMonolithic.Models.OrderedBook", "OrderedBook")
                         .WithMany()
-                        .HasForeignKey("BookId")
+                        .HasForeignKey("OrderedBookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LibraryServiceMonolithic.Models.PhysicalBook", b =>
+            modelBuilder.Entity("LibraryServiceMonolithic.Models.OrderedBook", b =>
                 {
-                    b.HasOne("LibraryServiceMonolithic.Models.Book", "Book")
+                    b.HasOne("LibraryServiceMonolithic.Models.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("BookId");
-
-                    b.HasOne("LibraryServiceMonolithic.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

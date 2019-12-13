@@ -11,52 +11,48 @@ namespace LibraryServiceMonolithic.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class PhysicalBooksController : ControllerBase
     {
         private readonly LibraryServiceMonolithicContext _context;
 
-        public OrdersController(LibraryServiceMonolithicContext context)
+        public PhysicalBooksController(LibraryServiceMonolithicContext context)
         {
             _context = context;
         }
 
-        // GET: api/Orders
+        // GET: api/PhysicalBooks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<PhysicalBook>>> GetPhysicalBook()
         {
-            return await _context.Order
-                .Include(order => order.Book)
-                .ToListAsync();
+            return await _context.PhysicalBook.ToListAsync();
         }
 
-        // GET: api/Orders/5
+        // GET: api/PhysicalBooks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<PhysicalBook>> GetPhysicalBook(int id)
         {
-            var order = await _context.Order
-                .Include(o => o.Book)
-                .FirstAsync(o => o.Id == id);
+            var physicalBook = await _context.PhysicalBook.FindAsync(id);
 
-            if (order == null)
+            if (physicalBook == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return physicalBook;
         }
 
-        // PUT: api/Orders/5
+        // PUT: api/PhysicalBooks/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<IActionResult> PutPhysicalBook(int id, PhysicalBook physicalBook)
         {
-            if (id != order.Id)
+            if (id != physicalBook.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Entry(physicalBook).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +60,7 @@ namespace LibraryServiceMonolithic.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
+                if (!PhysicalBookExists(id))
                 {
                     return NotFound();
                 }
@@ -77,38 +73,37 @@ namespace LibraryServiceMonolithic.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
+        // POST: api/PhysicalBooks
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<PhysicalBook>> PostPhysicalBook(PhysicalBook physicalBook)
         {
-            _context.Order.Add(order);
-
+            _context.PhysicalBook.Add(physicalBook);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return CreatedAtAction("GetPhysicalBook", new { id = physicalBook.Id }, physicalBook);
         }
 
-        // DELETE: api/Orders/5
+        // DELETE: api/PhysicalBooks/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
+        public async Task<ActionResult<PhysicalBook>> DeletePhysicalBook(int id)
         {
-            var order = await _context.Order.FindAsync(id);
-            if (order == null)
+            var physicalBook = await _context.PhysicalBook.FindAsync(id);
+            if (physicalBook == null)
             {
                 return NotFound();
             }
 
-            _context.Order.Remove(order);
+            _context.PhysicalBook.Remove(physicalBook);
             await _context.SaveChangesAsync();
 
-            return order;
+            return physicalBook;
         }
 
-        private bool OrderExists(int id)
+        private bool PhysicalBookExists(int id)
         {
-            return _context.Order.Any(e => e.Id == id);
+            return _context.PhysicalBook.Any(e => e.Id == id);
         }
     }
 }
