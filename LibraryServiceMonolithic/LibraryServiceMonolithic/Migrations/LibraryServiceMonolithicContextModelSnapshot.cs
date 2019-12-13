@@ -193,17 +193,12 @@ namespace LibraryServiceMonolithic.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("PhysicalBook");
                 });
@@ -287,11 +282,9 @@ namespace LibraryServiceMonolithic.Migrations
                 {
                     b.HasOne("LibraryServiceMonolithic.Models.Book", "Book")
                         .WithMany()
-                        .HasForeignKey("BookId");
-
-                    b.HasOne("LibraryServiceMonolithic.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

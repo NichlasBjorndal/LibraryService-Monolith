@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryServiceMonolithic.Migrations
 {
     [DbContext(typeof(LibraryServiceMonolithicContext))]
-    [Migration("20191130113017_initial")]
-    partial class initial
+    [Migration("20191213124815_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,7 +66,7 @@ namespace LibraryServiceMonolithic.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<string>("ISBN")
@@ -165,6 +165,46 @@ namespace LibraryServiceMonolithic.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LibraryServiceMonolithic.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("OrderTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("LibraryServiceMonolithic.Models.PhysicalBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("PhysicalBook");
+                });
+
             modelBuilder.Entity("LibraryServiceMonolithic.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -201,8 +241,8 @@ namespace LibraryServiceMonolithic.Migrations
                         {
                             Id = 2,
                             Email = "abc@gmail.com",
-                            FirstName = "Nick",
-                            LastName = "Hansen",
+                            FirstName = "Marcus",
+                            LastName = "B",
                             Password = "c0mpl!c@t3dPw"
                         });
                 });
@@ -211,7 +251,9 @@ namespace LibraryServiceMonolithic.Migrations
                 {
                     b.HasOne("LibraryServiceMonolithic.Models.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LibraryServiceMonolithic.Models.Loan", b =>
@@ -225,6 +267,24 @@ namespace LibraryServiceMonolithic.Migrations
                     b.HasOne("LibraryServiceMonolithic.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LibraryServiceMonolithic.Models.Order", b =>
+                {
+                    b.HasOne("LibraryServiceMonolithic.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LibraryServiceMonolithic.Models.PhysicalBook", b =>
+                {
+                    b.HasOne("LibraryServiceMonolithic.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

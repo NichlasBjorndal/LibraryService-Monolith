@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LibraryServiceMonolithic.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,7 @@ namespace LibraryServiceMonolithic.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ISBN = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<int>(nullable: true)
+                    AuthorId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace LibraryServiceMonolithic.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Author",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,6 +87,46 @@ namespace LibraryServiceMonolithic.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderTime = table.Column<DateTime>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    BookId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_Book_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Book",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PhysicalBook",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhysicalBook", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PhysicalBook_Book_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Book",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Author",
                 columns: new[] { "Id", "FirstName", "LastName" },
@@ -103,7 +143,7 @@ namespace LibraryServiceMonolithic.Migrations
                 values: new object[,]
                 {
                     { 1, "abc@gmail.com", "Nick", "Hansen", "thisIsAPW" },
-                    { 2, "abc@gmail.com", "Nick", "Hansen", "c0mpl!c@t3dPw" }
+                    { 2, "abc@gmail.com", "Marcus", "B", "c0mpl!c@t3dPw" }
                 });
 
             migrationBuilder.InsertData(
@@ -150,6 +190,16 @@ namespace LibraryServiceMonolithic.Migrations
                 name: "IX_Loan_UserId",
                 table: "Loan",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_BookId",
+                table: "Order",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhysicalBook_BookId",
+                table: "PhysicalBook",
+                column: "BookId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -158,10 +208,16 @@ namespace LibraryServiceMonolithic.Migrations
                 name: "Loan");
 
             migrationBuilder.DropTable(
-                name: "Book");
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "PhysicalBook");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Book");
 
             migrationBuilder.DropTable(
                 name: "Author");

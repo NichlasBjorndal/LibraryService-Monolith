@@ -27,7 +27,6 @@ namespace LibraryServiceMonolithic.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             var author1 = new Author
             {
                 Id = 1,
@@ -142,6 +141,7 @@ namespace LibraryServiceMonolithic.Models
             modelBuilder.Entity<Loan>().HasData(
              loan1, loan2, loan3
             );
+
         }
 
         public DbSet<LibraryServiceMonolithic.Models.Author> Author { get; set; }
