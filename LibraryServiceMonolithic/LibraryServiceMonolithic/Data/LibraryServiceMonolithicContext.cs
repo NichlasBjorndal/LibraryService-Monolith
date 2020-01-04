@@ -27,119 +27,116 @@ namespace LibraryServiceMonolithic.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var author1 = new Author
-            {
-                Id = 1,
-                FirstName = "Edger Allan",
-                LastName = "Poe"
-            };
+            var loopCount100Mb = 6500;
 
-            var book1 = new Book
-            {
-                Id = 1,
-                ISBN = "1234",
-                Title = "Book A",
-                AuthorId = 1
-            };
+            var authors = new List<Author>();
 
-            var author2 = new Author
+            for (int i = 1; i < loopCount100Mb; i++)
             {
-                Id = 2,
-                FirstName = "Thomas",
-                LastName = "Edison"
-            };
-            var book2 = new Book
-            {
-                Id = 2,
-                ISBN = "1234",
-                Title = "Book B",
-                AuthorId = 2
-            };
+                var author1 = new Author
+                {
+                    Id = i,
+                    FirstName = "Edger Allan",
+                    LastName = "Poe"
+                };
 
-            var author3 = new Author
-            {
-                Id = 3,
-                FirstName = "H.C",
-                LastName = "Andersen"
-            };
 
-            var book3 = new Book
+                authors.Add(author1);
+            }
+
+            var books = new List<Book>();
+
+            for (int i = 1; i < loopCount100Mb; i++)
             {
-                Id = 3,
-                ISBN = "1234",
-                Title = "Book Z",
-                AuthorId = 3
-            };
+                var book1 = new Book
+                {
+                    Id = i,
+                    ISBN = "1234",
+                    Title = "Book A",
+                    AuthorId = 1
+                };
+
+                books.Add(book1);
+            }
 
             modelBuilder.Entity<Author>().HasData(
-                author1, author2, author3
+                authors
             );
+
 
             modelBuilder.Entity<Book>(b =>
             {
                 b.HasData(
-                    book1, book2, book3
+                    books
                 );
 
             });
-              
 
+            var users = new List<User>();
 
-            var user1 = new User
+            for (int i = 1; i < loopCount100Mb; i++)
             {
-                Id = 1,
-                FirstName = "Nick",
-                LastName = "Hansen",
-                Email = "abc@gmail.com",
-                Password = "thisIsAPW"
-            };
-            var user2 = new User
-            {
-                Id = 2,
-                FirstName = "Marcus",
-                LastName = "B",
-                Email = "abc@gmail.com",
-                Password = "c0mpl!c@t3dPw"
-            };
+
+                var user1 = new User
+                {
+                    Id = i,
+                    FirstName = "Nick",
+                    LastName = "Hansen",
+                    Email = "abc@gmail.com",
+                    Password = "thisIsAPW"
+                };
+
+                users.Add(user1);
+            }
 
 
             modelBuilder.Entity<User>().HasData(
-                user1, user2
+                users
         );
 
-            var loan1 = new Loan
-            {
-                Id = 1,
-                UserId = 1,
-                BookId = 1,
-                StartDate = new DateTime(),
-                EndDate = new DateTime(),
-                Active = true
-            };
 
-            var loan2 = new Loan
-            {
-                Id = 2,
-                UserId = 1,
-                BookId = 2,
-                StartDate = new DateTime(),
-                EndDate = new DateTime(),
-                Active = false
-            };
+            var loans = new List<Loan>();
 
-
-            var loan3 = new Loan
+            for (int i = 1; i < loopCount100Mb; i++)
             {
-                Id = 3,
-                UserId = 2,
-                BookId = 3,
-                StartDate = new DateTime(),
-                EndDate = new DateTime(),
-                Active = true
-            };
+
+                var loan1 = new Loan
+                {
+                    Id = i,
+                    UserId = 1,
+                    BookId = 1,
+                    StartDate = new DateTime(),
+                    EndDate = new DateTime(),
+                    Active = true
+                };
+
+                loans.Add(loan1);
+            }
+  
 
             modelBuilder.Entity<Loan>().HasData(
-             loan1, loan2, loan3
+             loans
+            );
+
+
+            var orders = new List<Order>();
+
+            for (int i = 1; i < loopCount100Mb; i++)
+            {
+                var order1 = new Order
+                {
+                    Id = i,
+                    OrderTime = default,
+                    IsCompleted = false,
+                    BookId = 1,
+                };
+
+                orders.Add(order1);
+            }
+
+
+            modelBuilder.Entity<Order>().HasData(
+                orders
             );
 
         }
