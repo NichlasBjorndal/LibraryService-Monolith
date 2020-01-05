@@ -26,6 +26,7 @@ namespace LibraryServiceMonolithic.Controllers
         {
             return await _context.Order
                 .Include(order => order.Book)
+                    .ThenInclude(book => book.Author)
                 .ToListAsync();
         }
 
@@ -35,6 +36,7 @@ namespace LibraryServiceMonolithic.Controllers
         {
             var order = await _context.Order
                 .Include(o => o.Book)
+                     .ThenInclude(book => book.Author)   
                 .FirstAsync(o => o.Id == id);
 
             if (order == null)
