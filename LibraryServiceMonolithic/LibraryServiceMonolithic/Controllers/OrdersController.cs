@@ -85,6 +85,17 @@ namespace LibraryServiceMonolithic.Controllers
         {
             _context.Order.Add(order);
 
+            if (order.IsCompleted)
+            {
+                var physicalBook = new PhysicalBook
+                {
+                    Book = order.Book,
+                    BookId = order.BookId
+                };
+
+                _context.PhysicalBook.Add(physicalBook);
+            }
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);

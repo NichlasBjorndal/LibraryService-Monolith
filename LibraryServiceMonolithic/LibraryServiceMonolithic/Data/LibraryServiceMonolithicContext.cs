@@ -27,7 +27,7 @@ namespace LibraryServiceMonolithic.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var loopCount100Mb = 6500;
+            var loopCount100Mb = 15000;
 
             var authors = new List<Author>();
 
